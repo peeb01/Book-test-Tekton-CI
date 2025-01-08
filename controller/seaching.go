@@ -19,9 +19,9 @@ func SearchBook(db *gorm.DB, c *fiber.Ctx) error {
 
     var books []model.Book
     err := db.Where(`
-        REPLACE(LOWER(Title), ' ', '') LIKE ? OR
-        REPLACE(LOWER(Author), ' ', '') LIKE ? OR
-        REPLACE(LOWER(ISBN), ' ', '') LIKE ?`,
+        replace(lower(Title), ' ', '') like ? or
+        replace(lower(Author), ' ', '') like ? or
+        replace(lower(ISBN), ' ', '') like ?`,
         "%"+processedQuery+"%", "%"+processedQuery+"%", "%"+processedQuery+"%",
     ).Find(&books).Error
 
