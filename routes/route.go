@@ -2,7 +2,7 @@ package routes
 
 import (
 	"book/controller"
-	"fmt"
+	// "fmt"
 
 	"log"
 	"os"
@@ -10,8 +10,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	fiberlog "github.com/gofiber/fiber/v2/middleware/logger"
 	"gorm.io/gorm"
-
 	"github.com/joho/godotenv"
+
 )
 
 func Routes(db *gorm.DB){
@@ -19,7 +19,7 @@ func Routes(db *gorm.DB){
 		log.Fatal("Error loading .env file")
 	}
 	JWT := []byte(os.Getenv("JWT_SECRET"))
-	fmt.Println(JWT)
+	// fmt.Println(JWT)
 
 	app := fiber.New()
 	app.Use(fiberlog.New(fiberlog.Config{
@@ -27,7 +27,6 @@ func Routes(db *gorm.DB){
 		TimeFormat: "2006-01-02 15:04:05",
 		TimeZone:   "Local",
 	}))
-	
 	app.Post("/login", func(c *fiber.Ctx) error{
 		return controller.Login(db, c, JWT)
 	})
