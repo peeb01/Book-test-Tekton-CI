@@ -27,6 +27,10 @@ func Routes(db *gorm.DB){
 		TimeFormat: "2006-01-02 15:04:05",
 		TimeZone:   "Local",
 	}))
+
+	app.Get("/", func(c *fiber.Ctx) error{
+		return controller.Hello(c)
+	})
 	app.Post("/login", func(c *fiber.Ctx) error{
 		return controller.Login(db, c, JWT)
 	})
@@ -34,19 +38,19 @@ func Routes(db *gorm.DB){
 		return controller.Register(db, c)
 	})
 	app.Post("/newbook", func(c *fiber.Ctx) error{
-		return controller.NewBook(db, c)
+		return controller.NewBook(db, c, JWT)
 	})
 	app.Get("/verify", func(c *fiber.Ctx) error {
 		return controller.VerifyEmail(db, c)
 	})
 	app.Get("/summary", func(c *fiber.Ctx) error {
-		return controller.SummaryBooks(db, c)
+		return controller.SummaryBooks(db, c, JWT)
 	})
 	app.Get("/search", func(c *fiber.Ctx) error {
-		return controller.SearchBook(db, c)
+		return controller.SearchBook(db, c, JWT)
 	})
 	app.Get("/book", func(c *fiber.Ctx) error {
-		return controller.GetAll(db, c)
+		return controller.GetAll(db, c, JWT)
 	})
 
 	app.Listen(":8000")

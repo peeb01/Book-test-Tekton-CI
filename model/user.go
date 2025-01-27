@@ -13,4 +13,5 @@ type User struct {
 	VerificationToken string    `gorm:"size:255"`
 	CreatedAt         time.Time
 	UpdatedAt         time.Time
+	Books             []Book    `gorm:"many2many:user_books;"` // Many-to-Many relationship with Book
 }
