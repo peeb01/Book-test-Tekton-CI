@@ -1,0 +1,92 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pib-go-application-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pib-go-application-built
+  template:
+    metadata:
+      labels:
+        app: pib-go-application-built
+    spec:
+      containers:
+      - name: pib-go-application-built
+        image: pib21/go-app-build:v1
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: JWT_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: go-configmap
+                key: JWT_SECRET
+
+          - name: DB_HOST
+            value: pib-godb   # Service from Database
+          - name: DB_NAME
+          
+            valueFrom:
+              configMapKeyRef:
+                name: go-configmap
+                key: DB_NAME
+          - name: DB_USER
+            valueFrom:
+              configMapKeyRef:
+                name: go-configmap
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: go-configmap
+                key: DB_PASSWORD
+          - name: DB_SSLMODE
+            valueFrom:
+              configMapKeyRef:
+                name: go-configmap
+                key: DB_SSLMODE
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_TIMEZONE
+            valueFrom:
+              configMapKeyRef:
+                name: go-configmap
+                key: DB_TIMEZONE
+          - name: GMAIL
+            valueFrom:
+              configMapKeyRef:
+                name: go-configmap
+                key: GMAIL
+          - name: GPASS
+            valueFrom:
+              configMapKeyRef:
+                name: go-configmap
+                key: GPASS
+          - name: DOMAIN
+            valueFrom:
+              configMapKeyRef:
+                name: go-configmap
+                key: DOMAIN
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "1000m"
+
+---
+
+# Service for Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: pib-app-deployment-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: pib-go-application-built
+  ports:
+  - port: 8000
+    targetPort: 8000

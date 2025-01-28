@@ -1,0 +1,20 @@
+apiVersion: v1
+data:
+  DB_HOST: localhost
+  DB_NAME: book_test
+  DB_PASSWORD: Peeb123456
+  DB_PORT: "5432"
+  DB_SSLMODE: disable
+  DB_TIMEZONE: Asia/Bangkok
+  DB_USER: postgres
+  DOMAIN: http://localhost:8000
+  GMAIL: kitisaiyot01@gmail.com
+  GPASS: hfjymlhmqxwkyvhf
+  JWT_SECRET: ASKOSERSWRSDRQLRKSD
+  
+kind: ConfigMap
+metadata:
+  name: go-configmap
+  namespace: default
+  resourceVersion: "35978"
+  uid: ea807c2b-1f07-4d61-bc2a-fa091ce0ea0f

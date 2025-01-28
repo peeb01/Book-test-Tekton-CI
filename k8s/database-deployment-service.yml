@@ -1,0 +1,65 @@
+# StatefulSet for Database
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pib-go-application-database
+spec:
+  selector:
+    matchLabels:
+      app: go-application-database
+  serviceName: pib-godb
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: go-application-database
+    spec:
+      containers:
+      - name: pib-godb
+        image: postgres:12.0-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: go-configmap
+              key: DB_NAME
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: go-configmap
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: go-configmap
+              key: DB_PASSWORD
+        volumeMounts:
+        - name: pg-pib-goapp-storages
+          mountPath: /var/lib/psql
+          
+  volumeClaimTemplates:
+  - metadata:
+      name: pg-pib-goapp-storages
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 500Mi
+
+---
+
+# Service for Database
+apiVersion: v1
+kind: Service
+metadata:
+  name: pib-godb
+spec:
+  type: ClusterIP
+  selector:
+    app: go-application-database
+  ports:
+  - port: 5432
+    targetPort: 5432
