@@ -8,7 +8,7 @@ RUN go mod download
 
 COPY . ./
 
-RUN go build -o main
+RUN go build -buildvcs=false -o main
 
 FROM alpine:3
 
