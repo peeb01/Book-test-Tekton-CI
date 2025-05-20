@@ -8,7 +8,7 @@ RUN go mod download
 
 COPY . ./
 
-RUN CGO_ENABLED=0 GOOS=linux go build -mod=readonly -v -o main
+RUN go build -o main
 
 FROM alpine:3
 
