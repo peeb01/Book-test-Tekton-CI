@@ -1,5 +1,3 @@
-
-
 # Book List Checker 📚
 
 ## Overview
