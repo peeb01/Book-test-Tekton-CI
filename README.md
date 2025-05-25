@@ -15,6 +15,3 @@ This project provides a program to efficiently manage and check my book collecti
 - **Fiber**: Web framework for Go, offering fast and simple development.
 - **Gorm**: ORM for managing database interactions.
 - **PostgreSQL**: Database to store your book collection.
-
-
-
