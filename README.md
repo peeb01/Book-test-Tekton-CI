@@ -18,11 +18,3 @@ This project provides a program to efficiently manage and check my book collecti
 
 
 
-
-
-
-
-
-
-
-
