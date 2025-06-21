@@ -1,4 +1,4 @@
-FROM golang:1.24.3 AS builder
+FROM docker.io/library/golang:1.24.3 AS builder
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . ./
 
 RUN go build -buildvcs=false -o main
 
-FROM alpine:3
+FROM docker.io/library/alpine:3
 
 RUN apk add --no-cache ca-certificates
 
