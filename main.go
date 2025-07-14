@@ -5,13 +5,12 @@ import (
 	"book/routes"
 	"book/databases"
 )
-// i bright
+// remove test
 func main(){
 	db := databases.Connect()
 	model.ModelMigration(db)
 	routes.Routes(db)
 }
-
 
 
 
